@@ -1,0 +1,5 @@
+1,1,0,main.isValid
+2,2,0,main.patientId
+3,3,0,main.reason
+4,4,0,main.isPositive
+5,5,0,main.condition2

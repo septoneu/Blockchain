@@ -1,0 +1,178 @@
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+
+<div *ngIf="!this.isAdmin; then thenBlock else elseBlock"></div>
+<ng-template #thenBlock>
+  <div class="col-md-4 offset-md-4 mt-5 text-center">
+    <h1>Log in as Admin</h1>
+  </div>
+</ng-template>
+
+<ng-template #elseBlock>
+  <div class="container mt-5">
+    <div class="row justify-content-center">
+      <div class="col-lg-8">
+        <div class="card">
+          <div class="card-body">
+            <h4 class="card-title text-center" style="font-weight: 500;font-size: 20px;">Registration Form</h4>
+            <form #myform="ngForm" enctype="application/x-www-form-urlencoded" (ngSubmit)="onSubmit(myform)">
+              <div class="form-group">
+                <label style="font-weight: 500;" for="role">Role:</label>
+                <div style="display: flex;flex-direction: row;gap: 20px;">
+                  <div><input type="radio" name="role" value="Doctor" required [(ngModel)]="selectedRole" (change)="onRoleChange()"> Doctor</div>
+                  <div><input type="radio" name="role" value="Patient" required [(ngModel)]="selectedRole" (change)="onRoleChange()"> Patient</div>
+                  <div><input type="radio" name="role" value="Researcher" required [(ngModel)]="selectedRole" (change)="onRoleChange()"> Researcher</div>
+                </div>
+              </div>
+              <div *ngIf="selectedRole === 'Doctor'">
+                <h2>Doctor</h2>
+
+                <div class="form-group">
+                  <label for="firstNameDoctor">First Name:</label>
+                  <div class="input-group">
+                    <div class="input-group-prepend">
+                      <span class="input-group-text"><i class="fa fa-user-md"></i></span>
+                    </div>
+                    <input type="text" required name="firstNameDoctor" placeholder="First Name" class="form-control" ngModel>
+                  </div>
+                </div>
+
+                <div class="form-group">
+                  <label for="lastNameDoctor">Last Name:</label>
+                  <div class="input-group">
+                    <div class="input-group-prepend">
+                      <span class="input-group-text"><i class="fa fa-user-md"></i></span>
+                    </div>
+                    <input type="text" required name="lastNameDoctor" placeholder="Last Name" class="form-control" ngModel>
+                  </div>
+                </div>
+
+                <div class="form-group">
+                  <label for="doctorId">Doctor ID:</label>
+                  <div class="input-group">
+                    <div class="input-group-prepend">
+                      <span class="input-group-text"><i class="fa fa-user"></i></span>
+                    </div>
+                    <input type="text" required name="doctorId" placeholder="Doctor ID" class="form-control" ngModel>
+                  </div>
+                </div>
+
+                <div class="form-group">
+                  <label for="org">Organisation:</label>
+                  <div class="input-group">
+                    <div class="input-group-prepend">
+                      <span class="input-group-text"><i class="fa fa-sitemap"></i></span>
+                    </div>
+                    <input type="text" required name="org" placeholder="Organisation" class="form-control" ngModel>
+                  </div>
+                </div>
+              </div>
+
+              <div *ngIf="selectedRole === 'Patient'">
+                <h2>Patient</h2>
+
+                <div class="form-group">
+                  <label for="firstNamePatient">Patient Doctor: </label>
+                  <select [(ngModel)]="selectedDoctorId" name="selectedDoctor" style="width: 200px;">
+                    <option *ngFor="let doctor of doctorList" [value]="doctor.id">
+                      {{ doctor.firstNameDoctor }} {{ doctor.lastNameDoctor }}
+                    </option>
+                  </select>
+                </div> 
+
+                <div class="form-group">
+                  <label for="firstNamePatient">First Name:</label>
+                  <div class="input-group">
+                    <div class="input-group-prepend">
+                      <span class="input-group-text"><i class="fa fa-bed"></i></span>
+                    </div>
+                    <input type="text" required name="firstNamePatient" placeholder="First Name" class="form-control" ngModel>
+                  </div>
+                </div>
+
+                <div class="form-group">
+                  <label for="lastNamePatient">Last Name:</label>
+                  <div class="input-group">
+                    <div class="input-group-prepend">
+                      <span class="input-group-text"><i class="fa fa-bed"></i></span>
+                    </div>
+                    <input type="text" required name="lastNamePatient" placeholder="Last Name" class="form-control" ngModel>
+                  </div>
+                </div>
+
+                <div class="form-group">
+                  <label for="patientId">Patient ID:</label>
+                  <div class="input-group">
+                    <div class="input-group-prepend">
+                      <span class="input-group-text"><i class="fa fa-user"></i></span>
+                    </div>
+                    <input type="text" required name="patientId" placeholder="Patient ID" class="form-control" ngModel>
+                  </div>
+                </div>
+              </div>
+
+              <div *ngIf="selectedRole === 'Researcher'">
+                <h2>Researcher</h2>
+
+                <div class="form-group">
+                  <label for="firstNamePatient">Researcher Doctor: </label>
+                  <select [(ngModel)]="selectedDoctor" name="selectedDoctor"
+                      style="width: 200px;">
+                      <option *ngFor="let doctor of doctorList" [value]="doctor">{{ doctor.firstNameDoctor }} {{ doctor.lastNameDoctor }}</option>
+                    </select>
+                </div> 
+
+                <div class="form-group">
+                  <label for="researcherId">Researcher ID:</label>
+                  <div class="input-group">
+                    <div class="input-group-prepend">
+                      <span class="input-group-text"><i class="fa fa-user"></i></span>
+                    </div>
+                    <input type="text" required name="researcherId" placeholder="Researcher ID" class="form-control" ngModel>
+                  </div>
+                </div>
+
+                <div class="form-group">
+                  <label for="org">Organisation:</label>
+                  <div class="input-group">
+                    <div class="input-group-prepend">
+                      <span class="input-group-text"><i class="fa fa-sitemap"></i></span>
+                    </div>
+                    <input type="text" required name="org" placeholder="Organisation" class="form-control" ngModel>
+                  </div>
+                </div>
+
+                <div class="form-group">
+                  <label for="firstNameResearcher">First Name:</label>
+                  <div class="input-group">
+                    <div class="input-group-prepend">
+                      <span class="input-group-text"><i class="fa fa-flask"></i></span>
+                    </div>
+                    <input type="text" required name="firstNameResearcher" placeholder="First Name" class="form-control" ngModel>
+                  </div>
+                </div>
+
+                <div class="form-group">
+                  <label for="lastNameResearcher">Last Name:</label>
+                  <div class="input-group">
+                    <div class="input-group-prepend">
+                      <span class="input-group-text"><i class="fa fa-flask"></i></span>
+                    </div>
+                    <input type="text" required name="lastNameResearcher" placeholder="Last Name" class="form-control" ngModel>
+                  </div>
+                </div>
+              </div>
+              <div class="text-right">
+                <input type="submit" name="Register" class="btn btn-success" value="Register">
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</ng-template>
+
+<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.11.0/umd/popper.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>

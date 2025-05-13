@@ -1,0 +1,372 @@
+<div *ngIf="!this.isValidUser; then thenBlock else elseBlock"></div>
+
+<ng-template #thenBlock>
+  <div>
+    <h1> Log in as Doctor, Patient or Researcher</h1>
+  </div>
+</ng-template>
+<!-- Please edit below only -->
+<ng-template #elseBlock>
+
+  <div *ngIf="this.isDoctor">
+
+
+    <form #myform="ngForm" enctype="application/x-www-form-urlencoded" (ngSubmit)="readByDoctor(myform)">
+
+      <div class="form-group col-md-4 offset-4 mt-5">
+
+
+        <label for="PatientId">Patient Id: </label>
+        <input class="newform" name="patientId" placeholder="e.g. 1" ngModel>
+        <br>
+
+
+        <br>
+        <label for="org">Organization: </label>
+        <input class="newform" name="org" placeholder="e.g. Org1" ngModel>
+        <br>
+        <div style="width: 100%; display: flex; justify-content: right;">
+          <input *ngIf="!loading" class="newBut" type="submit" name="Request" value="Request">
+          <div *ngIf="loading" class="spinner"></div>
+        </div>
+      </div>
+    </form>
+
+    <br>
+    <h1 style="text-align:center;margin-top: 10px;padding-bottom: 10px;">Patient Data</h1>
+
+    <div class="table-container">
+      <table class="newtable">
+        <thead>
+          <tr>
+            <th>ID</th>
+            <th>First Name</th>
+            <th>Last Name</th>
+            <!-- <th>TAG</th>
+            <th>WBCs</th>
+            <th>LDL</th> -->
+            <th>File Download</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let patientItem of patient" style="border-bottom: 1.5px solid rgba(109, 108, 106, 0.664);">
+            <td
+              style="text-align: center; color: rgba(109, 108, 106, 0.664); border-right: 1.5px solid rgba(109, 108, 106, 0.664); padding: 25px;">
+              {{ patientItem.patientId }}
+            </td>
+            <td
+              style="text-align: center; color: rgba(109, 108, 106, 0.664); border-right: 1.5px solid rgba(109, 108, 106, 0.664); padding: 25px;">
+              {{ patientItem.firstNamePatient }}
+            </td>
+            <td
+              style="text-align: center; color: rgba(109, 108, 106, 0.664); border-right: 1.5px solid rgba(109, 108, 106, 0.664); padding: 25px;">
+              {{ patientItem.lastNamePatient }}
+            </td>
+            <!-- <td
+              style="text-align: center; color: rgba(109, 108, 106, 0.664); border-right: 1.5px solid rgba(109, 108, 106, 0.664); padding: 25px;">
+              {{ patientItem.TAG }}
+            </td>
+            <td
+              style="text-align: center; color: rgba(109, 108, 106, 0.664); border-right: 1.5px solid rgba(109, 108, 106, 0.664); padding: 25px;">
+              {{ patientItem.WBCs }}
+            </td>
+            <td
+              style="text-align: center; color: rgba(109, 108, 106, 0.664); border-right: 1.5px solid rgba(109, 108, 106, 0.664); padding: 25px;">
+              {{ patientItem.LDL }}
+            </td> -->
+            <td style="border-right: 1.5px solid rgba(109, 108, 106, 0.664);">
+              <div *ngIf="patientItem.files.length > 0"
+                style="display: flex; justify-content: center; align-items: center; gap: 20px; padding: 10px; flex-direction: row;">
+                <select [(ngModel)]="selectedFile[patientItem.patientId]" name="fileDropdown{{patientItem.patientId}}"
+                  style="width: 200px;">
+                  <option *ngFor="let file of patientItem.files" [value]="file">{{ file }}</option>
+                </select>
+                <button *ngIf="!downloadloading" id="but"
+                  (click)="downloadFile(selectedFile[patientItem.patientId], patientItem.patientId)">Download</button>
+                <div *ngIf="downloadloading" class="spinner"></div>
+              </div>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+
+
+
+  <div *ngIf="this.isPatient">
+
+
+    <!-- <form #myform="ngForm" enctype="application/x-www-form-urlencoded" (ngSubmit)="readByPatient(myform)"></form>
+
+          <br> -->
+
+    <div class="form-group col-md-4 offset-4 mt-5">
+
+      <h1 style="text-align:center;margin-top: 10px;padding-bottom: 10px;">Patient Data</h1>
+
+      <table class="newtable col-md-8 offset-2 mt-5">
+        <thead>
+          <tr>
+            <th>First Name</th>
+            <th>Last Name</th>
+            <!-- <th>TAG</th>
+            <th>WBCs</th>
+            <th>LDL</th> -->
+            <th>File Download</th>
+
+          </tr>
+        </thead>
+
+        <tbody>
+          <tr *ngFor="let patientItem of patient" style="border-bottom: 1.5px solid rgba(109, 108, 106, 0.664);">
+            <td
+              style="text-align: center; color: rgba(109, 108, 106, 0.664); border-right: 1.5px solid rgba(109, 108, 106, 0.664); padding: 25px;">
+              {{ patientItem.firstNamePatient }}</td>
+            <td
+              style="text-align: center; color: rgba(109, 108, 106, 0.664); border-right: 1.5px solid rgba(109, 108, 106, 0.664); padding: 25px;">
+              {{ patientItem.lastNamePatient }}</td>
+            <!-- <td
+              style="text-align: center; color: rgba(109, 108, 106, 0.664); border-right: 1.5px solid rgba(109, 108, 106, 0.664); padding: 25px;">
+              {{ patientItem.TAG }}</td>
+            <td
+              style="text-align: center; color: rgba(109, 108, 106, 0.664); border-right: 1.5px solid rgba(109, 108, 106, 0.664); padding: 25px;">
+              {{ patientItem.WBCs }}</td>
+            <td
+              style="text-align: center; color: rgba(109, 108, 106, 0.664); border-right: 1.5px solid rgba(109, 108, 106, 0.664); padding: 25px;">
+              {{ patientItem.LDL }}</td> -->
+
+            <td style="border-right: 1.5px solid rgba(109, 108, 106, 0.664);">
+              <div *ngIf="patientItem.files.length > 0"
+                style="display: flex; justify-content: center; align-items: center; gap: 20px; padding: 10px; flex-direction: row;">
+                <select [(ngModel)]="selectedFile[patientItem.patientId]" name="fileDropdown{{patientItem.patientId}}"
+                  style="width: 200px;">
+                  <option *ngFor="let file of patientItem.files" [value]="file">{{ file }}</option>
+                </select>
+                <button *ngIf="!loading" id="but"
+                  (click)="downloadFile(selectedFile[patientItem.patientId], patientItem.patientId)">Download</button>
+                <div *ngIf="loading" class="spinner"></div>
+              </div>
+            </td>
+          </tr>
+        </tbody>
+
+      </table>
+    </div>
+
+  </div>
+
+  <!-- <div *ngIf="this.isAdmin">
+
+
+        <form #myform="ngForm" enctype="application/x-www-form-urlencoded" (ngSubmit)="readByAdmin(myform)">
+
+            <div class="form-group col-md-4 offset-4 mt-5">
+
+                <br>
+                <label for="org">Organization: </label>
+                <input class="newform" name="org" placeholder="e.g. Org1" ngModel>
+                <br>
+                <div style="width: 100%; display: flex; justify-content: right;">
+                    <input class="newBut" type="submit" name="Request" value="Request">
+                </div>
+            </div>
+        </form>
+
+            <br>
+            <h1 style="text-align:center;margin-top: 10px;padding-bottom: 10px;">Patient Data</h1>
+            
+            <table class="newtable col-md-8 offset-2 mt-5">
+                <thead>
+                    <tr>
+                        <th>First Name</th>
+                        <th>Last Name</th>
+                        <th>TAG</th>
+                        <th>WBCs</th>
+                        <th>LDL</th>
+                        <th>File Download</th>
+                        <th></th>
+                     
+                    </tr>
+                </thead>
+    
+                <tbody>
+                  <tr *ngFor="let patientItem of patient" style="border-bottom: 1.5px solid rgba(109, 108, 106, 0.664);">
+                    <td style="text-align: center; color: rgba(109, 108, 106, 0.664); border-right: 1.5px solid rgba(109, 108, 106, 0.664); padding: 25px;">{{ patientItem.firstNamePatient }}</td>
+                    <td style="text-align: center; color: rgba(109, 108, 106, 0.664); border-right: 1.5px solid rgba(109, 108, 106, 0.664); padding: 25px;">{{ patientItem.lastNamePatient }}</td>
+                    <td style="text-align: center; color: rgba(109, 108, 106, 0.664); border-right: 1.5px solid rgba(109, 108, 106, 0.664); padding: 25px;">{{ patientItem.TAG }}</td>
+                    <td style="text-align: center; color: rgba(109, 108, 106, 0.664); border-right: 1.5px solid rgba(109, 108, 106, 0.664); padding: 25px;">{{ patientItem.WBCs }}</td>
+                    <td style="text-align: center; color: rgba(109, 108, 106, 0.664); border-right: 1.5px solid rgba(109, 108, 106, 0.664); padding: 25px;">{{ patientItem.LDL }}</td>
+    
+                    <td style = "border-right: 1.5px solid rgba(109, 108, 106, 0.664);">
+                      <div *ngIf="patientItem.files.length > 0" style="display: flex; justify-content: center; align-items: center; gap: 20px; padding: 10px; flex-direction: row;">
+                        <select [(ngModel)]="selectedFile[patientItem.patientId]" name="fileDropdown{{patientItem.patientId}}" style="width: 200px;">
+                          <option *ngFor="let file of patientItem.files" [value]="file">{{ file }}</option>
+                        </select>
+                        <button id="but" (click)="downloadFile(selectedFile[patientItem.patientId], patientItem.patientId)">Download</button>
+                      </div>
+                    </td>
+                  </tr>
+                </tbody>
+    
+            </table>
+
+    </div> -->
+
+  <div *ngIf="this.isResearcher">
+    <!-- <form #myform="ngForm" enctype="application/x-www-form-urlencoded" (ngSubmit)="readByResearcher(myform)">
+        <div class="form-group col-md-4 offset-4 mt-5">
+          <br>
+          <label for="org">Organization: </label>
+          <input class="newform" name="org" placeholder="e.g. Org1" ngModel>
+          <br>
+          <div style="width: 100%; display: flex; justify-content: right;">
+            <input class="newBut" type="submit" name="Request" value="Request">
+          </div>
+        </div>
+      </form> -->
+
+    <br>
+    <h1 style="text-align:center;margin-top: 10px;padding-bottom: 10px;">Hospital Statistics</h1>
+
+    <div class="center-content">
+      <div *ngFor="let hospital of [1, 2, 3]">
+        <h3>Hospital {{ hospital }}</h3>
+        <div class="form-group">
+          <button class="newBut" (click)="showStatistics(hospital)">Fetch All Statistics</button>
+          <!-- <button class="newBut" (click)="showEncryptionData(hospital)"
+            [disabled]="loading && selectedHospitalId === hospital" style="margin-left: 10px;">Start Encryption</button> -->
+        </div>
+        <div *ngIf="loading && selectedHospitalId === hospital" class="spinner-container">
+          <div class="spinner"></div>
+          <div class="loading-text">Loading...</div>
+        </div>
+
+        <div *ngIf="showStats[hospital] && statistics[hospital] && !showEncData[hospital]">
+          <h2>Statistics for Hospital {{ hospital }}:</h2>
+          <table class="newtable">
+            <thead>
+              <tr>
+                <th>Statistic</th>
+                <th>DP Value</th>
+                <th>Real Value (Only for demo purposes will be hidden later)</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>Age Mean</td>
+                <td>{{ statistics[hospital].age_mean_dp }}</td>
+                <td>{{ statistics[hospital].age_mean_real }}</td>
+              </tr>
+              <tr>
+                <td>Age Sum</td>
+                <td>{{ statistics[hospital].age_sum_dp }}</td>
+                <td>{{ statistics[hospital].age_sum_real }}</td>
+              </tr>
+              <tr>
+                <td>Weight Mean</td>
+                <td>{{ statistics[hospital].weight_mean_dp }}</td>
+                <td>{{ statistics[hospital].weight_mean_real }}</td>
+              </tr>
+              <tr>
+                <td>Weight Sum</td>
+                <td>{{ statistics[hospital].weight_sum_dp }}</td>
+                <td>{{ statistics[hospital].weight_sum_real }}</td>
+              </tr>
+              <tr>
+                <td>Height Mean</td>
+                <td>{{ statistics[hospital].height_mean_dp }}</td>
+                <td>{{ statistics[hospital].height_mean_real }}</td>
+              </tr>
+              <tr>
+                <td>Height Sum</td>
+                <td>{{ statistics[hospital].height_sum_dp }}</td>
+                <td>{{ statistics[hospital].height_sum_real }}</td>
+              </tr>
+              <tr>
+                <td>Count</td>
+                <td>{{ statistics[hospital].count_dp }}</td>
+                <td>{{ statistics[hospital].count_real }}</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <!-- <div *ngIf="showEncData[hospital] && homomorphicData[hospital] && !showStats[hospital]">
+          <h2>Homomorphic Encryption Data for Hospital {{ hospital }}:</h2>
+          <table class="newtable">
+            <thead>
+              <tr>
+                <th>Statistic</th>
+                <th>Value</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>Decrypted Sum</td>
+                <td>{{ homomorphicData[hospital]['Decrypted Sum ' + hospital] }}</td>
+              </tr>
+              <tr>
+                <td>Encrypted Sum (first 20 bytes)</td>
+                <td>{{ homomorphicData[hospital]['Encrypted Sum ' + hospital + ' (first 20 bytes)'] }}</td>
+              </tr>
+            </tbody>
+          </table>
+        </div> -->
+
+        <div *ngIf="!statistics[hospital] && !homomorphicData[hospital] && errorMessage">
+          <h2>Error:</h2>
+          <pre>{{ errorMessage }}</pre>
+        </div>
+      </div>
+    </div>
+
+    <button class="newBut" (click)="showEncryptionData()"
+      [disabled]="loading" style="margin-left: 10px;">Gather Encrypted Information</button>
+  </div>
+  <div *ngIf="loading" class="spinner-container">
+    <div class="spinner"></div>
+    <div class="loading-text">Loading...</div>
+  </div>
+
+  <div *ngIf="showEncData && homomorphicData && !showStats">
+    <h2>Homomorphic Encryption Data for Hospital {{ hospital }}:</h2>
+    <table class="newtable">
+      <thead>
+        <tr>
+          <th>Statistic</th>
+          <th>Value</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>Decrypted Age Sum</td>
+          <td>{{ homomorphicData['Decrypted Age Sum'}}</td>
+        </tr>
+        <tr>
+          <td>Decrypted Height Sum</td>
+          <td>{{ homomorphicData['Decrypted Height Sum'}}</td>
+        </tr>
+        <tr>
+          <td>Decrypted Weight Sum</td>
+          <td>{{ homomorphicData['Decrypted Weight Sum'}}</td>
+        </tr>
+        <tr>
+          <td>Encrypted Age Sum (first 20 bytes)</td>
+          <td>{{ homomorphicData['Encrypted Age Sum (first 20 bytes)'] }}</td>
+        </tr>
+        <tr>
+          <td>Encrypted Height Sum (first 20 bytes)</td>
+          <td>{{ homomorphicData['Encrypted Height Sum (first 20 bytes)'] }}</td>
+        </tr>
+        <tr>
+          <td>Encrypted Weight Sum (first 20 bytes)</td>
+          <td>{{ homomorphicData['Encrypted Weight Sum (first 20 bytes)'] }}</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  </div>
+</ng-template>

@@ -1,0 +1,41 @@
+<div *ngIf="!this.isPatient; then thenBlock else elseBlock"></div>
+
+<ng-template #thenBlock>
+    <div class='col-md-4 offset-4 mt-5'>
+        <h1>Log in as Patient</h1>
+    </div>
+</ng-template>
+<!-- Please edit below only -->
+<ng-template #elseBlock>
+
+    <div class='col-md-4 offset-4 mt-5'>
+
+        <h1 style="margin-left: -200px; padding-bottom: 40px; padding-top: 40px;">Grant Access to a Doctor</h1>
+
+        <form #myform="ngForm" enctype="application/x-www-form-urlencoded" (ngSubmit)="GrantAccessDoctor(myform)">
+
+            <div class="form-group">
+
+                <input class="formNew" name="newDocDisplay" placeholder="New doctor" required [(ngModel)]="newDoctorName" (input)="setDoctorId()" list="doctorList">
+                <datalist id="doctorList">
+                    <option *ngFor="let doctor of doctorList1" [ngValue]="doctor.firstNameDoctor + ' ' + doctor.lastNameDoctor">
+                    {{ doctor.firstNameDoctor }} {{ doctor.lastNameDoctor }}
+                    </option>
+                </datalist>
+                <input type="hidden" name="newDoc" [(ngModel)]="newDoctorId" ngModel>
+
+                <br>
+                <br>
+                <div style="width: 100%; display: flex; justify-content: right;">
+                    <input *ngIf="!loading" class='submitBut' type="submit" name="Grant" value="Grant Access">
+                    <div *ngIf="loading" class="spinner"></div>
+                </div>
+            </div>
+        </form>
+
+    </div>
+
+
+
+
+</ng-template>

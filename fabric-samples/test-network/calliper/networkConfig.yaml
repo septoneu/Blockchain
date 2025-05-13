@@ -1,0 +1,59 @@
+name: fabric-network
+version: "2.0"
+caliper:
+  blockchain: fabric
+clients:
+  client:
+    organization: Org1
+    client:
+      client1:
+        cryptoPath: ../organizations/peerOrganizations/org1.example.com/users/User1@org1.example.com/msp
+      client2:
+        cryptoPath: ../organizations/peerOrganizations/org2.example.com/users/User1@org2.example.com/msp
+      client3:
+        cryptoPath: ../organizations/peerOrganizations/org3.example.com/users/User1@org3.example.com/msp
+organizations:
+  Org1:
+    mspid: Org1MSP
+    peers:
+      - peer0.org1.example.com
+    certificateAuthorities:
+      - ca.org1.example.com
+  Org2:
+    mspid: Org2MSP
+    peers:
+      - peer0.org2.example.com
+    certificateAuthorities:
+      - ca.org2.example.com
+  Org3:
+    mspid: Org3MSP
+    peers:
+      - peer0.org3.example.com
+    certificateAuthorities:
+      - ca.org3.example.com
+orderers:
+  orderer.example.com:
+    url: grpcs://localhost:7050
+peers:
+  peer0.org1.example.com:
+    url: grpcs://localhost:7051
+    eventUrl: grpcs://localhost:7053
+  peer0.org2.example.com:
+    url: grpcs://localhost:9051
+    eventUrl: grpcs://localhost:9053
+  peer0.org3.example.com:
+    url: grpcs://localhost:11051
+    eventUrl: grpcs://localhost:11053
+certificateAuthorities:
+  ca.org1.example.com:
+    url: https://localhost:7054
+    httpOptions:
+      verify: false
+  ca.org2.example.com:
+    url: https://localhost:8054
+    httpOptions:
+      verify: false
+  ca.org3.example.com:
+    url: https://localhost:9054
+    httpOptions:
+      verify: false

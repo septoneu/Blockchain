@@ -1,0 +1,31 @@
+test:
+  name: fabric-network-benchmark
+  description: Testing the throughput of the RecordContract chaincode
+  workers:
+    type: local
+    number: 4
+  rounds:
+    - label: storeFileHash
+      description: Benchmark storeFileHash function
+      txNumber: 1000
+      rateControl:
+        type: fixed-rate
+        opts:
+          tps: 50
+      workload:
+        module: workload/storeFileHash.js
+        arguments:
+          chaincodeID: recordcontract
+          channelID: mychannel
+    - label: retrieveFileHash
+      description: Benchmark retrieveFileHash function
+      txNumber: 1000
+      rateControl:
+        type: fixed-rate
+        opts:
+          tps: 50
+      workload:
+        module: workload/retrieveFileHash.js
+        arguments:
+          chaincodeID: recordcontract
+          channelID: mychannel

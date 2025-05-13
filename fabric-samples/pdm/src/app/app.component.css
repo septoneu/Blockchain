@@ -1,0 +1,52 @@
+.navbar {
+    /* background-color: rgb(230, 239, 194); */
+    border-bottom: 1px solid black;
+    width: 100% !important;
+}
+
+.text-size a {
+    font-size: medium;
+}
+
+.top-nav {
+    text-align: right;
+    padding: 20px 0;
+    padding-right: 40px;
+    background-color: rgb(31, 29, 44);
+    color: rgb(253, 253, 253);
+}
+
+/* Unread notifications (white background) */
+.notification-panel li.unread {
+    background-color: white;
+}
+
+/* Read notifications (grey background) */
+.notification-panel li.read {
+    background-color: #f1f1f1;
+}
+
+.top-nav h1 {
+    margin: 0 !important;
+}
+
+.wrapper {
+    margin: 0 auto;
+    width: 1000px
+}
+
+.footer {
+    padding: 15px;
+    background-color: #373737;
+    position: fixed;
+    left: 0;
+    bottom: 0;
+    width: 100%;
+    z-index: 1;
+}
+
+.textDiv {
+    color: rgb(255, 255, 255);
+    margin: 0 !important;
+    text-align: center;
+}

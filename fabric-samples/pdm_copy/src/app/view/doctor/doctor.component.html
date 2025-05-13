@@ -1,0 +1,38 @@
+<div *ngIf="!this.isDoctor; then thenBlock else elseBlock"></div>
+<ng-template #thenBlock>
+    <div class='col-md-4 offset-4 mt-5'>
+        <h1> Log in as Doctor</h1>
+    </div>
+</ng-template>
+<!-- Please edit below only -->
+<ng-template #elseBlock>
+    <div class='buttoncenter'>
+        <h1 style="text-align: left; text-transform: capitalize;">Welcome</h1>
+        <!-- <li class="nav-item"><a class="nav-link" [routerLink] = "['../read']" routerLinkActive = "active" >Read Patient Data</a></li>
+     <li class="nav-item"><a class="nav-link" [routerLink] = "['../updateHealthRecord']" routerLinkActive = "active" >Update Patient Data</a></li> -->
+        <div style="display: flex;flex-direction: column;justify-content: center;align-items: center;gap: 5px; width: 100%;">
+            <button mat-button
+                style="width: 20%; background-color:  rgb(147, 169, 169); display: flex;justify-content: center;align-items: center; padding: 30px; border: solid rgb(212, 215, 217);"><div
+                    style="color: white;" class="nav-link" [routerLink]="['../read']" routerLinkActive="active">Read Patient
+                    Data</div></button>
+            <button mat-button
+                style="width: 20%; background-color:  rgb(147, 169, 169); display: flex;justify-content: center;align-items: center; padding: 30px; border: solid rgb(212, 215, 217);"><div
+                    style="color: white;" class="nav-link" [routerLink]="['../updateHealthRecord']"
+                    routerLinkActive="active">Update Patient Data</div></button>
+            <button mat-button
+                style="width: 20%; background-color:  rgb(147, 169, 169); display: flex;justify-content: center;align-items: center; padding: 30px; border: solid rgb(212, 215, 217);"><div
+                    style="color: white;" class="nav-link" [routerLink]="['../requests']" routerLinkActive="active">Request
+                    Access</div></button>
+            <button mat-button
+                style="width: 20%; background-color:  rgb(251, 5, 5); display: flex;justify-content: center;align-items: center; padding: 30px; border: solid rgb(251, 5, 5);"><div
+                    style="color: white;" class="nav-link" [routerLink]="['../emergency']" routerLinkActive="active">Emergency Request
+                    Access</div></button>
+        </div>
+        <!-- </div>
+    <div style="display: flex; flex-grow: grow;">
+     <app-read></app-read>
+    <app-update-health-record></app-update-health-record>
+    </div> -->
+    </div>
+
+</ng-template>

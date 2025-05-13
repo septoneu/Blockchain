@@ -1,0 +1,55 @@
+<div *ngIf="!this.isDoctor; then thenBlock else elseBlock"></div>
+
+<ng-template #thenBlock>
+    <div class='col-md-4 offset-4 mt-5'>
+        <h1> Log in as Doctor </h1>
+    </div>
+</ng-template>
+<!-- Please edit below only -->
+<ng-template #elseBlock>
+
+
+    <form #myform="ngForm" enctype="multipart/form-data" (ngSubmit)="UpdateHealthRecord(myform);">
+        <div class="form-group col-md-4 offset-4 mt-5">
+            <label for="patientId" style="width: 100%;">Patient Id:
+                <input class="formNew" name="patientId" placeholder="e.g. Patient1" ngModel>
+            </label>
+            <br>
+
+            <label for="org" style="width: 100%;">Organisation:
+                <input class="formNew" name="org" placeholder="e.g. Org1" ngModel>
+            </label>
+            <br>
+
+            <!-- <label for="TAG" style="width: 100%;">TAG:
+                <input type="number" class="formNew" name="TAG" placeholder="TAG" [(ngModel)]="TAG"
+                    ngModel>
+            </label>
+            <br>
+
+            <label for="WBCs" style="width: 100%;">WBCs:
+                <input type="number" class="formNew" name="WBCs" placeholder="WBCs" [(ngModel)]="WBCs"
+                    ngModel>
+            </label>
+            <br>
+
+            <label for="LDL" style="width: 100%;">LDL:
+                <input type = "number" class="formNew" name="LDL" placeholder="LDL" ngModel>
+            </label>
+            <br> -->
+
+            <label for="fileUpload" style="width: 100%;">File Upload:
+                <input type="file" name="fileUpload" (change)="handleFileInput($event)" accept=".pdf, .doc, .docx">
+            </label>
+            <br>
+            <br>
+
+            <div style="width: 100%; display: flex; justify-content: right;">
+                <input *ngIf="!loading" class='submitBut' type="submit" name="Update" value="Update">
+                <div *ngIf="loading" class="spinner"></div>
+            </div>
+        </div>
+    </form>
+
+
+</ng-template>

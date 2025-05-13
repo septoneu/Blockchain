@@ -1,0 +1,57 @@
+<div *ngIf="!this.isPatient; then thenBlock else elseBlock"></div>
+
+<ng-template #thenBlock>
+    <div class='col-md-4 offset-4 mt-5'>
+        <h1> Log in as Patient</h1>
+    </div>
+</ng-template>
+<!-- Please edit below only -->
+<ng-template #elseBlock>
+
+    <div class='col-md-4 offset-4 mt-5'>
+
+        <h1 style="margin-left: -200px; padding-bottom: 40px; padding-top: 40px;">Update Personal Information</h1>
+
+        <form #myform="ngForm" enctype="application/x-www-form-urlencoded" (ngSubmit)="UpdatePersonalInfo(myform)">
+
+            <div class="form-group">
+
+                <div style="width: 100%; display: flex; justify-content: right;">
+                    <input class='submitBut' type="submit" name="Update" value="Update">
+                </div>
+
+            </div>
+        </form>
+
+    </div>
+
+
+    <div *ngIf="this.returnsData; then block1"></div>
+
+    <ng-template #block1>
+        <div>
+            <!-- Will show only below table in case of patient -->
+            <table class="newtable">
+                <thead>
+                    <tr>
+                        <th>Patient Id</th>
+                        <!-- <th>TAG</th>
+                        <th>WBCs</th>
+                        <th>LDL</th> -->
+                    </tr>
+                </thead>
+
+                <tbody>
+                    <tr *ngFor="let p of patient">
+                        <td style="text-align: center; color: rgba(109, 108, 106, 0.664);">{{p?.PatientId}}</td>
+                        <!-- <td style="text-align: center; color: rgba(109, 108, 106, 0.664);">{{p?.TAG}}</td>
+                        <td style="text-align: center; color: rgba(109, 108, 106, 0.664);">{{p?.WBCs}}</td>
+                        <td style="text-align: center; color: rgba(109, 108, 106, 0.664);">{{p?.LDL}}</td> -->
+                    </tr>
+                </tbody>
+
+            </table>
+        </div>
+    </ng-template>
+
+</ng-template>

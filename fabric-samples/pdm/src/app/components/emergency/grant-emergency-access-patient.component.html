@@ -1,0 +1,103 @@
+<!-- <div *ngIf="!this.isDoctor; then thenBlock else elseBlock"></div>
+
+<ng-template #thenBlock>
+    <div class='col-md-4 offset-4 mt-5'>
+        <h1>Log in as Doctor</h1>
+    </div>
+</ng-template>
+
+<ng-template #elseBlock>
+    <div class='col-md-4 offset-4 mt-5'>
+        <h1 style="margin-left: -200px; padding-bottom: 40px; padding-top: 40px;">
+            Grant emergency access to a Patient
+        </h1>
+
+        <form #myform="ngForm" enctype="application/x-www-form-urlencoded" (ngSubmit)="RequestEmergencyAccessDoctor(myform)">
+            <div class="form-group">
+                <input class="formNew" name="newPatDisplay" placeholder="New patient" required
+                    [(ngModel)]="newPatientName" (input)="setPatientId()" list="patientList">
+                <datalist id="patientList">
+                    <option *ngFor="let patient of patientList1"
+                        [ngValue]="patient.firstNamePatient + ' ' + patient.lastNamePatient">
+                        {{ patient.firstNamePatient }} {{ patient.lastNamePatient }}
+                    </option>
+                </datalist>
+                <input type="hidden" name="newPat" [(ngModel)]="newPatientId" ngModel>
+
+                <br><br>
+
+                <label for="accessReason">Reason for emergency access:</label>
+                <select id="accessReason" name="accessReason" class="form-control" required [(ngModel)]="selectedReason">
+                    <option *ngFor="let reason of reasonsList" [value]="reason">{{ reason }}</option>
+                </select>
+
+                <br><br>
+
+                <div style="width: 100%; display: flex; justify-content: right;">
+                    <input *ngIf="!loading" class='submitBut' type="submit" name="Grant" value="Request Access">
+                    <div *ngIf="loading" class="spinner"></div>
+                </div>
+            </div>
+        </form>
+    </div>
+</ng-template> -->
+
+
+<div *ngIf="!isDoctor; then thenBlock else elseBlock"></div>
+
+<ng-template #thenBlock>
+  <div class="col-md-4 offset-4 mt-5">
+    <h1>Log in as Doctor</h1>
+  </div>
+</ng-template>
+<!-- Please edit below only -->
+<ng-template #elseBlock>
+  <div class="col-md-4 offset-4 mt-5">
+    <h1 style="margin-left: -200px; padding-bottom: 40px; padding-top: 40px;">
+      Grant emergency access to a Patient
+    </h1>
+
+    <form #myform="ngForm" enctype="application/x-www-form-urlencoded" (ngSubmit)="RequestEmergencyAccessDoctor(myform)">
+      <div class="form-group">
+        <input class="formNew" name="newPatDisplay" placeholder="New patient" required
+               [(ngModel)]="newPatientName" (input)="setPatientId()" list="patientList">
+        <datalist id="patientList">
+          <option *ngFor="let patient of patientList1"
+                  [ngValue]="patient.firstNamePatient + ' ' + patient.lastNamePatient">
+            {{ patient.firstNamePatient }} {{ patient.lastNamePatient }}
+          </option>
+        </datalist>
+        <input type="hidden" name="newPat" [(ngModel)]="newPatientId" ngModel>
+
+        <br><br>
+
+        <label for="accessReason">Reason for emergency access:</label>
+        <select id="accessReason" name="accessReason" class="form-control" required [(ngModel)]="selectedReason">
+          <option *ngFor="let reason of reasonsList" [value]="reason">{{ reason }}</option>
+        </select>
+
+        <br><br>
+
+        <!-- New input fields for the emergency secret and public secret -->
+        <div class="form-group mt-3">
+          <label for="emergencySecret">Emergency Secret:</label>
+          <input id="emergencySecret" type="text" class="form-control" name="emergencySecret"
+                 [(ngModel)]="emergencySecret" required placeholder="Enter emergency secret">
+        </div>
+
+        <div class="form-group mt-3">
+          <label for="publicSecret">Public Secret:</label>
+          <input id="publicSecret" type="text" class="form-control" name="publicSecret"
+                 [(ngModel)]="publicSecret" required placeholder="Enter expected public secret">
+        </div>
+
+        <br><br>
+
+        <div style="width: 100%; display: flex; justify-content: right;">
+          <input *ngIf="!loading" class="submitBut" type="submit" name="Grant" value="Request Access">
+          <div *ngIf="loading" class="spinner"></div>
+        </div>
+      </div>
+    </form>
+  </div>
+</ng-template>

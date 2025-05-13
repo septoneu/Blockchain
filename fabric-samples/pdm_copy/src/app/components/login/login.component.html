@@ -1,0 +1,42 @@
+<div class = 'row m-0 w-100'>
+    <div class = 'col-md-4 offset-4 mt-5' *ngIf = '!this.isLogin '>
+        <!-- <h4>Login</h4>
+        <form #myform = "ngForm" enctype="application/x-www-form-urlencoded" (ngSubmit) = "onSubmit(myform)" >
+            <div class = 'form-group'>
+                <input class = 'form-control' type= "text" name = "username" placeholder = "Username" ngModel>
+            </div>
+            <div class = 'form-group'>
+                <input class = 'form-control'  type = "password" name = "password" placeholder = "Password" ngModel>
+            </div><input class= 'btn btn-outline-info' type = "submit" value = "Login" > 
+        </form > -->
+        <div class="login-form">
+        <form #myform = "ngForm" enctype="application/x-www-form-urlencoded" (ngSubmit) = "onSubmit(myform)">
+            <h1>Login</h1>
+            <div class="content">
+              <div class="input-field">
+                <input type="text" placeholder="Username" name="username" autocomplete="nope" ngModel>
+              </div>
+              <div class="input-field">
+                <input type="password" placeholder="Password" name="password" autocomplete="new-password" ngModel>
+              </div>
+            </div>
+            <div class="action">
+              <button type = "submit" value = "Login">Sign in</button>
+            </div>
+          </form>
+        </div>
+    </div>
+
+
+
+    <div class = 'col-md-4 offset-4 mt-5' *ngIf = 'this.isLogin'>
+        <div style="display: flex; flex-direction: row;">
+            <h1>Logged in as </h1>
+            <h1 style="text-transform: capitalize;"><pre style="font-size: 25px;font-family: Arial, Helvetica, sans-serif;"> {{roleLoggedIn}}</pre></h1>
+        </div>
+        <div style="width: 100%; display: flex; justify-content: right;">
+          <button class = 'newBut' (click) = 'logout()'>Log out</button>
+        </div>
+      </div>
+    
+</div>

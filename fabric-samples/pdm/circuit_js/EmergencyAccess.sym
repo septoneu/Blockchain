@@ -1,0 +1,15 @@
+1,1,2,main.sk
+2,2,2,main.flag
+3,3,2,main.pubSecret
+4,-1,1,main.checkFlag.out
+5,-1,1,main.checkFlag.in[0]
+6,-1,1,main.checkFlag.in[1]
+7,-1,0,main.checkFlag.isz.out
+8,4,0,main.checkFlag.isz.in
+9,5,0,main.checkFlag.isz.inv
+10,-1,1,main.checkSecret.out
+11,-1,1,main.checkSecret.in[0]
+12,-1,1,main.checkSecret.in[1]
+13,-1,0,main.checkSecret.isz.out
+14,6,0,main.checkSecret.isz.in
+15,7,0,main.checkSecret.isz.inv

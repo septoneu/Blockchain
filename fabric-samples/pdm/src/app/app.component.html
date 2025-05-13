@@ -1,0 +1,309 @@
+<!-- Styles -->
+<style>
+  /* Navbar Styles */
+  .navbar-nav {
+    align-items: center;
+  }
+
+  .navbar-nav.ml-auto {
+    margin-left: auto;
+  }
+
+  /* Notification Button Styles */
+  .notification-button {
+    position: relative;
+    margin-right: 15px;
+    background: none;
+    border: none;
+    cursor: pointer;
+  }
+
+  .notification-button i {
+    font-size: 24px;
+    color: #555;
+    transition: color 0.3s;
+  }
+
+  .notification-button:hover i {
+    color: #007bff;
+  }
+
+  .notification-count {
+    position: absolute;
+    top: -5px;
+    right: -5px;
+    background-color: #e74c3c;
+    color: white;
+    font-size: 12px;
+    padding: 2px 6px;
+    border-radius: 50%;
+    min-width: 20px;
+    text-align: center;
+    line-height: 1;
+    font-weight: bold;
+    box-shadow: 0 0 0 2px white;
+  }
+
+  /* Updated Notification Panel Styles */
+  .notification-panel {
+    position: absolute;
+    top: calc(100% + 10px);
+    right: 0;
+    background-color: #fff;
+    border: 1px solid #ddd;
+    width: 350px;
+    z-index: 1000;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
+    border-radius: 8px;
+    overflow: hidden;
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(-10px);
+    transition: all 0.3s ease-in-out;
+  }
+
+  .notification-panel.show {
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0);
+  }
+
+  .notification-panel::before {
+    content: '';
+    position: absolute;
+    top: -10px;
+    right: 25px;
+    border-width: 0 10px 10px 10px;
+    border-style: solid;
+    border-color: transparent transparent #ddd transparent;
+  }
+
+  .notification-panel::after {
+    content: '';
+    position: absolute;
+    top: -9px;
+    right: 26px;
+    border-width: 0 9px 9px 9px;
+    border-style: solid;
+    border-color: transparent transparent #fff transparent;
+  }
+
+  .notification-panel h3 {
+    margin: 0;
+    padding: 15px;
+    font-size: 18px;
+    background-color: #93A9A9;
+    color: white;
+    border-bottom: 1px solid #ddd;
+  }
+
+  .notification-panel ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    max-height: 300px;
+    overflow-y: auto;
+  }
+
+  .notification-panel li {
+    padding: 15px;
+    border-bottom: 1px solid #eee;
+    display: block;
+    transition: background-color 0.2s;
+  }
+
+  .notification-panel li:last-child {
+    border-bottom: none;
+  }
+
+  /* Unread notifications (white background) */
+  .notification-panel li.unread {
+    background-color: #f9f9f9;
+    font-weight: bold;
+  }
+
+  /* Read notifications (grey background) */
+  .notification-panel li.read {
+    background-color: #fff;
+  }
+
+  /* Remove click effect on notification items */
+  .notification-panel li:hover {
+    background-color: #fff;
+  }
+
+  .notification-panel .no-notifications {
+    padding: 15px;
+    text-align: center;
+    color: #777;
+  }
+
+  .notification-panel .close-button {
+    width: 100%;
+    padding: 12px;
+    background-color: #f5f5f5;
+    border-top: 1px solid #ddd;
+    text-align: center;
+    cursor: pointer;
+    font-weight: bold;
+    transition: background-color 0.2s;
+  }
+
+  .notification-panel .close-button:hover {
+    background-color: #e9ecef;
+  }
+
+  /* Ensure the notification container is positioned correctly */
+  .notification-container {
+    position: relative;
+    display: inline-block;
+  }
+
+  /* Notification Actions Styles */
+  .notification-actions {
+    margin-top: 10px;
+    display: flex;
+    justify-content: flex-end;
+    gap: 10px;
+  }
+
+  .notification-actions button {
+    padding: 6px 12px;
+    font-size: 14px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.2s;
+  }
+
+  .notification-actions .btn-yes {
+    background-color: #93A9A9;
+    /* Green */
+    color: white;
+  }
+
+  .notification-actions .btn-yes:hover {
+    background-color: #7c8e8e;
+  }
+
+  .notification-actions .btn-no {
+    background-color: #efefef;
+    /* Red */
+    box-shadow: 0px 0px 2px 5px rgba(0, 0, 0, 0.2);
+    color: rgb(86, 86, 86);
+  }
+
+  .notification-actions .btn-no:hover {
+    background-color: #dcdcdc;
+  }
+
+  .notification-actions button:disabled {
+    background-color: #ccc;
+    cursor: not-allowed;
+  }
+</style>
+
+<!-- Existing code -->
+<div class="top-nav">
+  <h1>SEPTON Data Management</h1>
+</div>
+<div>
+  <nav class="navbar navbar-expand-lg navbar-light">
+    <!-- Navbar content -->
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav"
+      aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarNav">
+      <!-- Left-aligned items -->
+      <ul class="navbar-nav">
+        <!-- Logout/Login buttons -->
+        <li class="nav-item">
+          <button *ngIf="isLogin; else loginButton" mat-button>
+            <a class="nav-link" [routerLink]="['/login']" routerLinkActive="active">Logout</a>
+          </button>
+          <ng-template #loginButton>
+            <button mat-button>
+              <a class="nav-link" [routerLink]="['/login']" routerLinkActive="active">Login</a>
+            </button>
+          </ng-template>
+        </li>
+
+        <!-- Role-based navigation -->
+        <li class="nav-item" *ngIf="isAdmin">
+          <button mat-button>
+            <a class="nav-link" [routerLink]="['admin']" routerLinkActive="active">Admin</a>
+          </button>
+        </li>
+        <li class="nav-item" *ngIf="isDoctor">
+          <button mat-button>
+            <a class="nav-link" [routerLink]="['doctor']" routerLinkActive="active">Doctor</a>
+          </button>
+        </li>
+        <li class="nav-item" *ngIf="isPatient">
+          <button mat-button>
+            <a class="nav-link" [routerLink]="['/patient']" routerLinkActive="active">Patient</a>
+          </button>
+        </li>
+        <li class="nav-item" *ngIf="isResearcher">
+          <button mat-button>
+            <a class="nav-link" [routerLink]="['researcher']" routerLinkActive="active">Researcher</a>
+          </button>
+        </li>
+      </ul>
+
+      <!-- Right-aligned items -->
+      <ul class="navbar-nav ml-auto">
+        <li class="nav-item" style="position: relative;">
+          <!-- Notification Bell with Count for Doctor and Patient -->
+          <div *ngIf="isDoctor || isPatient" class="notification-container">
+            <button (click)="onNotificationClick()" class="notification-button">
+              <i class="fas fa-bell"></i>
+              <span *ngIf="unreadNotificationsCount > 0" class="notification-count">
+                {{ unreadNotificationsCount }}
+              </span>
+            </button>
+
+            <!-- Notification Panel -->
+            <div *ngIf="showNotifications" class="notification-panel show">
+              <h3>Notifications</h3>
+              <ul *ngIf="notifications.length > 0; else noNotifications">
+                <li *ngFor="let notification of notifications; trackBy: trackByNotificationId"
+                  [ngClass]="{'unread': notification.status === 0, 'read': notification.status === 1}">
+                  {{ notification.message }}
+
+                  <!-- For patients, show Yes and No buttons -->
+                  <div *ngIf="isPatient" class="notification-actions">
+                    <button class="btn-yes" (click)="onYesClick(notification)"
+                      [disabled]="notification.actionTaken">Yes</button>
+                    <button class="btn-no" (click)="onNoClick(notification)"
+                      [disabled]="notification.actionTaken">No</button>
+                  </div>
+                </li>
+              </ul>
+              <ng-template #noNotifications>
+                <div class="no-notifications">No new notifications.</div>
+              </ng-template>
+              <div class="close-button" (click)="showNotifications = false">Close</div>
+            </div>
+          </div>
+        </li>
+      </ul>
+    </div>
+  </nav>
+</div>
+
+<!-- Existing content -->
+<div>
+  <router-outlet></router-outlet>
+</div>
+<article>
+  <br />
+  <br />
+  <br />
+  <br />
+  <br />
+</article>
+<footer class="footer">
+  <h3 class="textDiv">2024 - Infili Technologies</h3>
+</footer>

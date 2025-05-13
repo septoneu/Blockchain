@@ -1,0 +1,17 @@
+version: '3'
+
+networks:
+  fabric_test:
+    name: fabric_test
+
+services:
+  express-backend:
+    build:
+      context: ../client
+    ports:
+      - "5001:5001"
+    networks:
+      - fabric_test
+    volumes:
+      ../../fabric-samples/:/usr/src/app
+    command: ./client/npm start

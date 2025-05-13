@@ -1,0 +1,25 @@
+<div *ngIf="!this.isPatient; then thenBlock else elseBlock" ></div>
+<ng-template #thenBlock >
+    <div class = 'col-md-4 offset-4 mt-5'>
+    <h1> Log in as Patient</h1>
+    </div>
+</ng-template>
+<!-- Please edit below only -->
+<ng-template #elseBlock >
+    <div class = 'buttoncenter'>
+      <h1 style=" text-transform: capitalize; padding-top:20px; padding-bottom: 40px; margin-left: -300px;">Welcome</h1>
+       <!--  <li class="nav-item"><a class="nav-link" [routerLink] = "['../read']" routerLinkActive = "active" >Read Patient Data</a></li>
+        <li class="nav-item"><a class="nav-link" [routerLink] = "['../update']" routerLinkActive = "active" >Update Personal Info</a></li>
+        <li class="nav-item"><a class="nav-link" [routerLink] = "['../grant']" routerLinkActive = "active" >Grant Access to Doctor</a></li>
+        <li class="nav-item"><a class="nav-link" [routerLink] = "['../revoke']" routerLinkActive = "active" >Revoke Access for a Doctor</a></li>
+      -->
+      <button mat-button style="text-align: center; width: 25%; background-color:  rgb(147, 169, 169); display: flex;justify-content: center;align-items: center; padding: 30px; border: solid rgb(212, 215, 217);"><a style="color: white;" class="nav-link" [routerLink] = "['../read']" routerLinkActive = "active" >Read Patient Data</a></button>
+      <!-- <button mat-button style="text-align: center; width: 25%; background-color:  rgb(147, 169, 169); display: block; padding: 20px 40px; border: solid rgb(212, 215, 217);"><a style="color: white;" class="nav-link" [routerLink] = "['../update']" routerLinkActive = "active" >Update Personal Info</a></button> -->
+      <button mat-button style="text-align: center; width: 25%; background-color:  rgb(147, 169, 169); display: flex;justify-content: center;align-items: center; padding: 30px; border: solid rgb(212, 215, 217);"><a style="color: white;" class="nav-link" [routerLink] = "['../grantdoctor']" routerLinkActive = "active" >Grant Access to a Doctor</a></button>
+      <!-- <button mat-button style="text-align: center; width: 25%; background-color:  rgb(147, 169, 169); display: block; padding: 20px 40px; border: solid rgb(212, 215, 217);"><a style="color: white;" class="nav-link" [routerLink] = "['../grantresearcher']" routerLinkActive = "active" >Grant Access to a Researcher</a></button> -->
+      <button mat-button style="text-align: center; width: 25%; background-color:  rgb(147, 169, 169); display: flex;justify-content: center;align-items: center; padding: 30px; border: solid rgb(212, 215, 217);"><a style="color: white;" class="nav-link" [routerLink] = "['../revokedoctor']" routerLinkActive = "active" >Revoke Access for a Doctor</a></button>
+      <!-- <button mat-button style="text-align: center; width: 25%; background-color:  rgb(147, 169, 169); display: block; padding: 20px 40px; border: solid rgb(212, 215, 217);"><a style="color: white;" class="nav-link" [routerLink] = "['../revokeresearcher']" routerLinkActive = "active" >Revoke Access for a Researcher</a></button> -->
+
+  </div>
+</ng-template>
+<router-outlet></router-outlet>

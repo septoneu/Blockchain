@@ -1,0 +1,39 @@
+<div *ngIf="!this.isPatient; then thenBlock else elseBlock"></div>
+
+<ng-template #thenBlock>
+    <div class='col-md-4 offset-4 mt-5'>
+        <h1> Log in as Patient</h1>
+    </div>
+</ng-template>
+<!-- Please edit below only -->
+<ng-template #elseBlock>
+
+    <div class='col-md-4 offset-4 mt-5'>
+
+        <h1 style="margin-left: -200px; padding-bottom: 40px; padding-top: 40px;">Revoke Access to a Doctor</h1>
+
+        <form #myform="ngForm" enctype="application/x-www-form-urlencoded" (ngSubmit)="RevokeAccessDoctor(myform)">
+
+            <div class="form-group">
+
+                <br>
+                <br>
+
+                <label for="doc">Revoke access: </label>
+                    <select class="formNew" name="newDoc" [(ngModel)]="newDoctor">
+                        <option *ngFor="let doctor of doctorList" [value]="doctor.doctorId">
+                        {{ doctor.firstNameDoctor }} {{ doctor.lastNameDoctor }}
+                        </option>
+                    </select>
+
+                <br>
+                <div style="width: 100%; display: flex; justify-content: right;">
+                    <input *ngIf="!loading" class='submitBut' type="submit" name="Revoke" value="Revoke Access">
+                    <div *ngIf="loading" class="spinner"></div>
+                </div>
+            </div>
+        </form>
+
+    </div>
+
+</ng-template>
